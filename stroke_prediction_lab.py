@@ -241,7 +241,7 @@ elif menu == "🤖 뇌졸중 예측 모델링":
 
                 # Train Test Split
                 X_train, X_test, y_train, y_test = train_test_split(
-                    X, y, test_state=42, test_size=0.2, stratify=y
+                    X, y, random_state=42, test_size=0.2, stratify=y
                 )
 
                 # Random Forest Classifier
