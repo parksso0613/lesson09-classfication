@@ -65,13 +65,6 @@ except Exception as e:
     data_load_success = False
     st.error(f"데이터를 불러오는 중 오류가 발생했습니다: {e}")
 
-# -----------------------------------------------------------------------------
-# 4. App Header
-# -----------------------------------------------------------------------------
-st.title("🧠 뇌졸중 예측 실습실")
-st.markdown("머신러닝 기법을 활용하여 뇌졸중 발병 위험도를 분석하고 예측하는 실습 공간입니다.")
-st.divider()
-
 # Sidebar Navigation
 st.sidebar.header("📌 메뉴 Navigation")
 menu = st.sidebar.radio(
@@ -83,7 +76,9 @@ menu = st.sidebar.radio(
 # TAB 1: 데이터 소개 (Home)
 # -----------------------------------------------------------------------------
 if menu == "📊 데이터 소개 (Home)":
-    st.subheader("📋 뇌졸중 데이터셋 소개")
+    st.title("🧠 뇌졸중 데이터셋 소개")
+    st.markdown("머신러닝 기법을 활용하여 뇌졸중 발병 위험도를 분석하고 예측하기 위한 기본 데이터 정보입니다.")
+    st.divider()
 
     if data_load_success:
         # Key Metrics Display (4 Big Cards)
@@ -178,7 +173,9 @@ if menu == "📊 데이터 소개 (Home)":
 # TAB 2: 데이터 탐색 & 시각화 (Plotly)
 # -----------------------------------------------------------------------------
 elif menu == "🔍 데이터 탐색 & 시각화":
-    st.subheader("📊 Plotly 기반 데이터 시각화 탐색")
+    st.title("🔍 데이터 탐색 & 시각화")
+    st.markdown("Plotly 그래프를 활용하여 범주형 및 수치형 변수들과 뇌졸중의 관계를 탐색합니다.")
+    st.divider()
 
     if data_load_success:
         tab1, tab2 = st.tabs(["범주형 데이터 분석", "수치형 데이터 분석"])
@@ -218,7 +215,9 @@ elif menu == "🔍 데이터 탐색 & 시각화":
 # TAB 3: 뇌졸중 예측 모델링 (Scikit-learn)
 # -----------------------------------------------------------------------------
 elif menu == "🤖 뇌졸중 예측 모델링":
-    st.subheader("🤖 Random Forest 뇌졸중 예측 모델")
+    st.title("🤖 뇌졸중 예측 모델링")
+    st.markdown("Random Forest 모델을 사용하여 뇌졸중 위험도를 예측하고 중요 변수 및 평가 결과를 확인합니다.")
+    st.divider()
 
     if data_load_success:
         st.write("간단한 전처리(결측치 대체 및 원-핫 인코딩)를 수행한 후 모델을 학습시킵니다.")
