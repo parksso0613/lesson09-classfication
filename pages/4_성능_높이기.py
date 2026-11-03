@@ -160,30 +160,40 @@ if data_load_success:
 
     def render_model_comparison(unbal_m, bal_m, model_title):
         st.markdown(f"#### 📌 {model_title}")
-        comp_df = pd.DataFrame([
-            {
-                "구분": "가중치 조절 전 (None)",
-                "TN (실제0→예측0)": f"{unbal_m['TN']:,}명",
-                "FP (실제0→예측1)": f"{unbal_m['FP']:,}명",
-                "FN (실제1→예측0)": f"{unbal_m['FN']:,}명",
-                "TP (실제1→예측1)": f"{unbal_m['TP']:,}명",
-                "정확도": unbal_m["Accuracy"],
-                "재현율 (Recall)": unbal_m["Recall"],
-                "정밀도 (Precision)": unbal_m["Precision"],
-                "F1 점수": unbal_m["F1"]
-            },
-            {
-                "구분": "가중치 조절 후 (Balanced)",
-                "TN (실제0→예측0)": f"{bal_m['TN']:,}명",
-                "FP (실제0→예측1)": f"{bal_m['FP']:,}명",
-                "FN (실제1→예측0)": f"{bal_m['FN']:,}명",
-                "TP (실제1→예측1)": f"{bal_m['TP']:,}명",
-                "정확도": bal_m["Accuracy"],
-                "재현율 (Recall)": bal_m["Recall"],
-                "정밀도 (Precision)": bal_m["Precision"],
-                "F1 점수": bal_m["F1"]
-            }
-        ])
+        
+        # 가중치 조절 전/후를 가로축(열), 지표들을 세로축(행)으로 구성
+        comp_df = pd.DataFrame({
+            "지표 및 평가 항목": [
+                "찾아낸 환자 수 (TP - 실제1 → 예측1)",
+                "놓친 환자 수 (FN - 실제1 → 예측0)",
+                "헛짚은 사람 수 (FP - 실제0 → 예측1)",
+                "정상 예측 수 (TN - 실제0 → 예측0)",
+                "정확도 (Accuracy)",
+                "재현율 (Recall)",
+                "정밀도 (Precision)",
+                "F1 점수 (F1-Score)"
+            ],
+            "가중치 조절 전 (None)": [
+                f"{unbal_m['TP']:,}명",
+                f"{unbal_m['FN']:,}명",
+                f"{unbal_m['FP']:,}명",
+                f"{unbal_m['TN']:,}명",
+                unbal_m["Accuracy"],
+                unbal_m["Recall"],
+                unbal_m["Precision"],
+                unbal_m["F1"]
+            ],
+            "가중치 조절 후 (Balanced)": [
+                f"{bal_m['TP']:,}명",
+                f"{bal_m['FN']:,}명",
+                f"{bal_m['FP']:,}명",
+                f"{bal_m['TN']:,}명",
+                bal_m["Accuracy"],
+                bal_m["Recall"],
+                bal_m["Precision"],
+                bal_m["F1"]
+            ]
+        })
         st.dataframe(comp_df, use_container_width=True, hide_index=True)
 
         st.info(
